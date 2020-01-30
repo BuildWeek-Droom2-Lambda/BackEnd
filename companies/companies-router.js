@@ -1,21 +1,21 @@
 const router = require("express").Router();
 
-// get all seekers
+// get all companies
 router.get("/", async (req, res, next) => {
-  res.status(200).send("welcome to seekers")
+  res.status(200).send("welcome to companies")
 });
 
-// get seeker by id
+// get company by id
 router.get("/:id", async (req, res, next) => {
   res.status(200).json({ userById: req.params.id })
 })
 
-// post a new seeker
+// post a new company
 router.post("/", async (req, res, next) => {
-  res.status(201).send("post to seekers")
+  res.status(201).send("post to companies")
 });
 
-// update an existing seeker
+// update an existing company
 router.put("/:id", async (req, res, next) => {
   res.status(200).json({
     message: "good",
@@ -23,7 +23,7 @@ router.put("/:id", async (req, res, next) => {
   })
 });
 
-// delete a seeker
+// delete a company
 router.delete("/:id", async (req, res, next) => {
   res.status(200).json({ id: req.params.id, deleted: true })
 });
