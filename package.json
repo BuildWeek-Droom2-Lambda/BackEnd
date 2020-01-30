@@ -1,0 +1,33 @@
+{
+  "name": "bw_backend_server",
+  "version": "1.0.0",
+  "description": "Server for Final Build Week",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon -r dotenv/config index.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "nodemon",
+    "bcryptjs",
+    "knex",
+    "sqlite3"
+  ],
+  "author": "Clif Hodges",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.20.8",
+    "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
