@@ -1,8 +1,14 @@
 const router = require("express").Router();
+const db = require("../database/dbConfig");
 
 // get all jobs
 router.get("/", async (req, res, next) => {
-  res.status(200).send("welcome to jobs")
+  try {
+    const jobs = await db("jobs")
+    res.status(200).json(jobs)
+  } catch (err) {
+    next(err)
+  }
 });
 
 // get job by id

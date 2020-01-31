@@ -7,6 +7,8 @@
 
 # **API**
 
+**_Keep in mind the heroku server goes to sleep after 30 mins of activity, so if it lags, it may be the first time it's being accessed in a while. Give it a minute to boot up and try again_**
+
 *baseUrl:*  `https://droom-node-server.herokuapp.com/api`
 
 > ## Jobs
@@ -22,6 +24,7 @@
     - *PROTECTED*
     - Returns id and name of new job
     - Your request body must include a name, location, description, and the company_id of the company making the post
+    - Salary is optional
 
   - ### **PUT** `/jobs/:id`
     - *PROTECTED*
@@ -34,6 +37,7 @@
     - The id should be in the request paramaters
     - Returns a 1 if successful, indicating the number of deleted records.
 
+--------
 > ## Companies
 
   - ### **GET** `/companies`
@@ -43,14 +47,9 @@
     - The id should be in the request paramaters
     - Returns the id, name, location, and bio of the company by id
 
-```
---- UNDER REVIEW ---
-
-  - ### **POST** `/companies`
-    - *PROTECTED*
+  - ### **POST** `/companies` ( use when registering a new company account )
     - Returns id and name of new company
-    - Your request body must include a name, location, and bio of the company
-```
+    - Your request body must include a name, password, location, and bio of the company
 
   - ### **PUT** `/companies/:id`
     - *PROTECTED*
@@ -63,7 +62,7 @@
     - The id should be in the request paramaters
     - Returns a 1 if successful, indicating the number of deleted records.
 
-
+--------
 
 > ## Seekers
 
@@ -74,14 +73,9 @@
     - The id should be in the request paramaters
     - Returns the id, username, location, skills, and experience of the seeker by id
 
-```
---- MAY MOVE TO AUTH ROUTER ---
---- MAYBE THEY DONT NEED TO KNOW HOW THE BACKEND IS SET UP, JUST HOW TO CONNECT TO IT ---
-
-  - ### **POST** `/seekers`
+  - ### **POST** `/seekers` ( use when registering a new seeker account )
     - Returns id and name of new seeker
-    - Your request body must include a username, location, skills, and experience of the new seeker to be posted
-```
+    - Your request body must include a username, password, location, skills, and experience of the new seeker to be posted
 
   - ### **PUT** `/seekers/:id`
     - *PROTECTED*
