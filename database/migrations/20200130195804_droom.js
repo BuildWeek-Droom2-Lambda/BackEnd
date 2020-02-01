@@ -8,10 +8,22 @@ exports.up = async function(knex) {
     tbl.text("password")
       .notNullable()
     tbl.string("location", 64)
-      .notNullable()
     tbl.text("bio")
   });
 
+  
+  await knex.schema.createTable("seekers", tbl => {
+    tbl.increments()
+    tbl.string("name", 64)
+    .notNullable()
+      .unique()
+    tbl.text("password")
+      .notNullable()
+    tbl.string("location", 64)
+    tbl.text("skills")
+    tbl.text("experience")
+  });
+  
   await knex.schema.createTable("jobs", tbl => {
     tbl.increments()
     tbl.string("name", 64)
@@ -28,20 +40,8 @@ exports.up = async function(knex) {
       .references("id")
       .inTable("companies")
   });
-
-  await knex.schema.createTable("seekers", tbl => {
-    tbl.increments()
-    tbl.string("username", 64)
-      .notNullable()
-      .unique()
-      tbl.text("password")
-      .notNullable()
-    tbl.string("location", 64)
-      .notNullable()
-    tbl.text("skills")
-    tbl.text("experience")
-  });
 };
+
 
 exports.down = async function(knex) {
   await knex.schema.dropTableIfExists("seekers");
