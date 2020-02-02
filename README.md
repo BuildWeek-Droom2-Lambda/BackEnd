@@ -20,6 +20,9 @@
     - Returns the user (if found and valid) along with a JSON Web token.
     - Your request body must include the name, password, and user type (which can only be "seeker" or "company") of the user.
 
+--------
+________
+
 > ## Jobs
 
   - ### **GET** `/jobs`
@@ -67,6 +70,7 @@
     - *PROTECTED*
     - The id should be in the request parameters
     - Returns a 1 if successful, indicating the number of deleted records.
+    - **DELETING A COMPANY WILL DELETE ALL THE JOBS IT HAS POSTED AS WELL**
 
 --------
 

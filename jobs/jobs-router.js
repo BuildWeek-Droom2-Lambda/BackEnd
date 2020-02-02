@@ -5,6 +5,8 @@ const authenticate = require("../auth/auth-middleware");
 const doesntExist = { message: "The job with that ID doesn't exist." };
 const invalidRequest = { message: "You must include a name, location, and description of the job, and the company_id of the company posting the job in your request." }
 
+// TODO: add authentication middleware to appropriate endpoints
+
 // get all jobs
 router.get("/", async (req, res, next) => {
   try {
@@ -67,7 +69,12 @@ router.put("/:id", async (req, res, next) => {
 
 // delete a job
 router.delete("/:id", async (req, res, next) => {
-  res.status(200).json({ id: req.params.id, deleted: true })
+  const id = req.params.id
+  try {
+    res.status(200).json(await model.remove(id))
+  } catch (err) {
+    next(err)
+  }
 });
 
 module.exports = router;

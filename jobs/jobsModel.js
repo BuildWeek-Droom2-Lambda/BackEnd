@@ -1,33 +1,38 @@
-const bcrypt = require("bcryptjs")
-const db = require("../database/dbConfig")
+const db = require("../database/dbConfig");
 
 function find() {
   return db("jobs")
-}
+    .orderBy("id", "asc")
+};
 
 function findBy(filter) {
-  return db("jobs").where(filter)
-}
+  return db("jobs")
+    .where(filter)
+};
 
 async function findById(id) {
   const job = await db("jobs").where({ id })
   return job.length === 0 ? null : job
-}
+};
 
 async function add(job) {
   const [id] = await db("jobs").insert(job)
   return findById(id)
-}
+};
 
 async function update(id, updates) {
-  const updated = await db("jobs").where({ id }).update(updates)
-  console.log(updated)
+  await db("jobs")
+    .where({ id })
+    .update(updates)
+    
   return findById(id)
-}
+};
 
 function remove(id) {
-  return db("jobs").where({ id }).del()
-}
+  return db("jobs")
+    .where({ id })
+    .del()
+};
 
 module.exports = {
   find,
@@ -36,4 +41,4 @@ module.exports = {
   add,
   update,
   remove
-}
+};

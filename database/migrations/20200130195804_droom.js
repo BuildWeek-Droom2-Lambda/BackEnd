@@ -39,6 +39,8 @@ exports.up = async function(knex) {
       .notNullable()
       .references("id")
       .inTable("companies")
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE')
   });
 };
 
