@@ -2,7 +2,9 @@ const router = require("express").Router();
 const model = require("../seekers/seekersModel");
 
 const doesntExist = { message: "The seeker with that ID doesn't exist." };
-const invalidRequest = { message: "You must include the name of the seeker in your request." }
+const invalidRequest = { message: "You must include the name of the seeker in your request." };
+
+// TODO: add authentication middleware to appropriate endpoints
 
 // get all seekers
 router.get("/", async (req, res, next) => {
@@ -32,12 +34,13 @@ router.get("/:id", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
   const id = req.params.id;
   const updates = req.body;
+  
+  if(!updates) {
+    return res.status(400).json(invalidRequest)
+  };
+
   try {
     const seeker = await model.findById(id);
-
-    if(!updates) {
-      return res.status(400).json(invalidRequest)
-    };
 
     if(!seeker) {
       return res.status(404).json(doesntExist)
@@ -54,7 +57,12 @@ router.put("/:id", async (req, res, next) => {
 
 // delete a seeker
 router.delete("/:id", async (req, res, next) => {
-  res.status(200).json({ id: req.params.id, deleted: true })
+  const id = req.params.id
+  try {
+    res.status(200).json(await model.remove(id))
+  } catch (err) {
+    next(err)
+  }
 });
 
 module.exports = router;
