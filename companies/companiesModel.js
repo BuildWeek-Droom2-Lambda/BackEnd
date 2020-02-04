@@ -25,6 +25,11 @@ async function add(user) {
   return findById(id)
 }
 
+async function save(company_id, seeker_id) {
+  const saved = await db("companies_seekers").insert({ company_id, seeker_id })
+  return saved
+}
+
 async function update(id, updates) {
   await db("companies")
     .where({ id })
@@ -45,6 +50,7 @@ module.exports = {
   findBy,
   findById,
   add,
+  save,
   update,
   remove
 }

@@ -57,10 +57,31 @@ router.put("/:id", async (req, res, next) => {
 
 // delete a seeker
 router.delete("/:id", async (req, res, next) => {
-  const id = req.params.id
+  const id = req.params.id;
   try {
     res.status(200).json(await model.remove(id))
   } catch (err) {
+    next(err)
+  }
+});
+
+// save a job
+router.post("/:id/saved", async (req, res, next) => {
+  const seeker_id = req.params.id;
+  const seeker = await model.findById(seeker_id);
+  const { job_id } = req.body;
+
+  if (!req.body || !job_id) {
+    return res.status(400).json({ message: "You must include the job you are saving in your request." })
+  } else if (!seeker) {
+    return res.status(404).json(doesntExist)
+  }
+
+  try {
+    const saved = await model.save(seeker_id, job_id)
+    res.status(201).json(saved)
+  } catch (err) {
+    console.log(err)
     next(err)
   }
 });

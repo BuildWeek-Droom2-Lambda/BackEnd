@@ -16,6 +16,7 @@ const notFound = {
 }
 
 router.post("/register", async (req, res, next) => {
+  // TODO: check if the user already exists and show error message
   try {
     const user = req.body
 

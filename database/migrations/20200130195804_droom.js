@@ -42,10 +42,27 @@ exports.up = async function(knex) {
       .onUpdate('CASCADE')
       .onDelete('CASCADE')
   });
+
+  await knex.schema.createTable("seekers_jobs", tbl => {
+    tbl.string("seeker_id")
+      .notNullable()
+    tbl.string("job_id")
+      .notNullable()
+  });
+
+  await knex.schema.createTable("companies_seekers", tbl => {
+    tbl.string("company_id")
+      .notNullable()
+    tbl.string("seeker_id")
+      .notNullable()
+  });
+
 };
 
 
 exports.down = async function(knex) {
+  await knex.schema.dropTableIfExists("companies_seekers");
+  await knex.schema.dropTableIfExists("seekers_jobs");
   await knex.schema.dropTableIfExists("seekers");
   await knex.schema.dropTableIfExists("jobs");
   await knex.schema.dropTableIfExists("companies");
