@@ -16,7 +16,7 @@ const notFound = {
 }
 
 router.post("/register", async (req, res, next) => {
-  // TODO: check if the user already exists and show error message
+
   try {
     const user = req.body
 
@@ -24,6 +24,15 @@ router.post("/register", async (req, res, next) => {
       return res.status(401).json(errorMessage)
     }
 
+    // check if user exists already
+    const checkSeeker = await seekersModel.findBy({ name: user.name })
+    const checkCompany = await companiesModel.findBy({ name: user.name })
+
+    if (checkSeeker.length > 0 || checkCompany.length > 0) {
+      return res.status(400).json({ message: "The user with that name already exists." })
+    }
+
+    // format user to post to database
     const userToPost = { name: user.name, password: user.password }
 
     // Switch the table to post the user to, based on the type.

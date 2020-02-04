@@ -25,15 +25,16 @@ async function add(user) {
   return findById(id)
 }
 
-async function save(seeker_id, job_id) {
-  await db("seekers_jobs").insert({ seeker_id, job_id })
-  const seeker = await findById(seeker_id)
-  const job = await db("jobs")
-    .where({ id: job_id })
-    .first()
-    .select("id", "name", "location", "description", "salary", "company_id")
-  return { seeker, job }
-}
+// DEPRECATED
+// async function save(seeker_id, job_id) {
+//   await db("seekers_jobs").insert({ seeker_id, job_id })
+//   const seeker = await findById(seeker_id)
+//   const job = await db("jobs")
+//     .where({ id: job_id })
+//     .first()
+//     .select("id", "name", "location", "description", "salary", "company_id")
+//   return { seeker, job }
+// }
 
 async function update(id, updates) {
   await db("seekers")
@@ -54,6 +55,5 @@ module.exports = {
   findById,
   update,
   add,
-  save,
   remove
 }
