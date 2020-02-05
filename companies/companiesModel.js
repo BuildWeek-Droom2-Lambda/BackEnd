@@ -26,10 +26,17 @@ async function add(user) {
   return findById(id)
 }
 
-// async function save(company_id, seeker_id) {
-//   const saved = await db("companies_seekers").insert({ company_id, seeker_id })
-//   return saved
-// }
+async function save(id, seeker) {
+  await db("companiesSaved").insert({ 
+    id, 
+    seeker_id: seeker.id,
+    seeker_name: seeker.name,
+    seeker_location: seeker.location,
+    seeker_skills: seeker.skills,
+    seeker_experience: seeker.experience
+  })
+  return db("companiesSaved").where({seeker_id: seeker.id})
+}
 
 async function update(id, updates) {
   await db("companies")
@@ -51,6 +58,7 @@ module.exports = {
   findBy,
   findById,
   add,
+  save,
   update,
   remove
 }

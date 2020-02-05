@@ -4,6 +4,7 @@ const authenticate = require("../auth/auth-middleware");
 
 const doesntExist = { message: "The seeker with that ID doesn't exist." };
 const invalidRequest = { message: "You must include the name of the seeker in your request." };
+const invalidSaveRequest = { message: "You must include the job_id, name, location, description and company_id in your request." };
 
 // get all seekers
 router.get("/", async (req, res, next) => {
@@ -64,26 +65,25 @@ router.delete("/:id", authenticate, async (req, res, next) => {
   }
 });
 
-// DEPRECATED
 // save a job
-// router.post("/:id/saved", async (req, res, next) => {
-//   const seeker_id = req.params.id;
-//   const seeker = await model.findById(seeker_id);
-//   const { job_id } = req.body;
+router.post("/:id/saved", async(req, res, next) => {
+  const id = req.params.id;
 
-//   if (!req.body || !job_id) {
-//     return res.status(400).json({ message: "You must include the job you are saving in your request." })
-//   } else if (!seeker) {
-//     return res.status(404).json(doesntExist)
-//   }
+  const job = req.body;
 
-//   try {
-//     const saved = await model.save(seeker_id, job_id)
-//     res.status(201).json(saved)
-//   } catch (err) {
-//     console.log(err)
-//     next(err)
-//   }
-// });
+  const seeker = await model.findById(id);
+  if (!seeker) {
+    return res.status(404).json(doesntExist);
+  } else if (!job.job_id || !job.name || !job.location || !job.description || !job.company_id) {
+    return res.status(400).json(invalidSaveRequest);
+  };
+
+  try {
+    res.status(201).json(await model.save(id, job))
+  } catch (err) {
+    console.log(err)
+    next(err)
+  };
+});
 
 module.exports = router;

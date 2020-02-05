@@ -15,7 +15,7 @@ exports.up = async function(knex) {
   await knex.schema.createTable("seekers", tbl => {
     tbl.increments()
     tbl.string("name", 64)
-    .notNullable()
+      .notNullable()
       .unique()
     tbl.text("password")
       .notNullable()
@@ -43,26 +43,43 @@ exports.up = async function(knex) {
       .onDelete('CASCADE')
   });
 
-  // await knex.schema.createTable("seekers_jobs", tbl => {
-  //   tbl.string("seeker_id")
-  //     .notNullable()
-  //   tbl.string("job_id")
-  //     .notNullable()
-  // });
+  await knex.schema.createTable("seekersSaved", tbl => {
+    tbl.string("id")
+      .notNullable()
+    tbl.string("job_id")
+      .notNullable()
+    tbl.string("job_name", 64)
+      .notNullable()
+    tbl.string("job_location", 64)
+      .notNullable()
+    tbl.text("job_description")
+      .notNullable()
+    tbl.integer("job_salary")
+      .unsigned()
+    tbl.integer("job_company_id")
+      .unsigned()
+      .notNullable()
+  });
 
-  // await knex.schema.createTable("companies_seekers", tbl => {
-  //   tbl.string("company_id")
-  //     .notNullable()
-  //   tbl.string("seeker_id")
-  //     .notNullable()
-  // });
+  await knex.schema.createTable("companiesSaved", tbl => {
+    tbl.string("id")
+      .notNullable()
+    tbl.string("seeker_id")
+      .notNullable()
+    tbl.string("seeker_name", 64)
+      .notNullable()
+      .unique()
+    tbl.string("seeker_location", 64)
+    tbl.text("seeker_skills")
+    tbl.text("seeker_experience")
+  });
 
 };
 
 
 exports.down = async function(knex) {
-  // await knex.schema.dropTableIfExists("companies_seekers");
-  // await knex.schema.dropTableIfExists("seekers_jobs");
+  await knex.schema.dropTableIfExists("companiesSaved");
+  await knex.schema.dropTableIfExists("seekersSaved");
   await knex.schema.dropTableIfExists("seekers");
   await knex.schema.dropTableIfExists("jobs");
   await knex.schema.dropTableIfExists("companies");
