@@ -12,8 +12,8 @@ module.exports = (req, res, next) => {
         req.token = decoded
         next()
       }  
-    })
+    });
   } else {
-    res.status(401).json({ message: 'Please login and try again.' })
-  }
+    res.status(401).json({ message: 'You have to login to do that.' })
+  };
 };

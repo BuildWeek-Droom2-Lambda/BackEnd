@@ -28,57 +28,57 @@ exports.seed = async function(knex) {
       ]);
     });
 
-    await knex('seekers').del()
-      .then(function () {
-        return knex('seekers').insert([
-          {
-            name: "Wayne Carter",
-            password: "12345",
-            location: "Philadelphia, PA",
-            skills: "JS, CSS, SCSS, Git, React",
-            experience: "1 year of web development"
-          },
-          {
-            name: "Josh Smith",
-            password: "12345",
-            location: "Austin, TX",
-            skills: "JS, Node, Java, Git",
-            experience: "3 years of building web servers"
-          },
-          {
-            name: "Fred Aldridge",
-            password: "12345",
-            location: "New Orleans, LA",
-            skills: "HTML, JS, React, Redux, Node, CSS, SCSS, Git",
-            experience: "2 year of building websites"
-          }
-        ]);
-      });
-    
-    await knex('jobs').truncate()
-      .then(function () {
-        return knex('jobs').insert([
-          {
-            name: "Front End Developer",
-            location: "Austin, TX",
-            description: "Update and manage company website and client course pages.",
-            salary: 78000,
-            company_id: 2
-          },
-          {
-            name: "Back End Developer",
-            location: "Charlotte, NC",
-            description: "Update company server.",
-            salary: 84000,
-            company_id: 1
-          },
-          {
-            name: "Data Analyst",
-            location: "Nashville, TN",
-            description: "Collect and analyze consumer data to drive increases in revenue and customer satisfaction.",
-            salary: 123000,
-            company_id: 3
-          }
-        ]);
-      });
+  await knex('seekers').del()
+    .then(function () {
+      return knex('seekers').insert([
+        {
+          name: "Wayne Carter",
+          password: "12345",
+          location: "Philadelphia, PA",
+          skills: "JS, CSS, SCSS, Git, React",
+          experience: "1 year of web development"
+        },
+        {
+          name: "Josh Smith",
+          password: "12345",
+          location: "Austin, TX",
+          skills: "JS, Node, Java, Git",
+          experience: "3 years of building web servers"
+        },
+        {
+          name: "Fred Aldridge",
+          password: "12345",
+          location: "New Orleans, LA",
+          skills: "HTML, JS, React, Redux, Node, CSS, SCSS, Git",
+          experience: "2 year of building websites"
+        }
+      ]);
+    });
+  
+  await knex('jobs').truncate()
+    .then(function () {
+      return knex('jobs').insert([
+        {
+          name: "Front End Developer",
+          location: "Austin, TX",
+          description: "Update and manage company website and client course pages.",
+          salary: 78000,
+          company_id: 2
+        },
+        {
+          name: "Back End Developer",
+          location: "Charlotte, NC",
+          description: "Update company server.",
+          salary: 84000,
+          company_id: 1
+        },
+        {
+          name: "Data Analyst",
+          location: "Nashville, TN",
+          description: "Collect and analyze consumer data to drive increases in revenue and customer satisfaction.",
+          salary: 123000,
+          company_id: 3
+        }
+      ]);
+    });
 };
