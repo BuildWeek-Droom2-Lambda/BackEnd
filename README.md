@@ -72,6 +72,29 @@ ________
     - Returns a 1 if successful, indicating the number of deleted records.
     - **DELETING A COMPANY WILL DELETE ALL THE JOBS IT HAS POSTED AS WELL**
 
+    ### **_SAVED ROUTES_**
+
+  - ### **GET** `/companies/:id/saved`
+    - *PROTECTED*
+    - The id of the company should be in the request parameters
+    - Returns an array of all saved seekers for a company
+
+  - ### **GET** `/companies/:id/saved/:seek_id`
+    - *PROTECTED*
+    - The id of the company and id of the seeker (seek_id) should be in the request parameters
+    - Returns the saved seeker object
+
+  - ### **POST** `/companies/:id/saved`
+    - *PROTECTED*
+    - The id of the company should be in the request parameters
+    - You must include `seeker_id` and `seeker_name` in the request body. `seeker_location`, `seeker_skills`, and `seeker_experience` are optional
+    - Returns the saved seeker object
+
+  - ### **DELETE** `/companies/:id/saved/:seek_id`
+    - *PROTECTED*
+    - The id of the company and id of the seeker (seek_id) should be in the request parameters
+    - Returns the number of deleted records.
+
 --------
 
 > ## Seekers
@@ -86,10 +109,33 @@ ________
   - ### **PUT** `/seekers/:id`
     - *PROTECTED*
     - Returns the updated seeker object
-    - Your request body must include the username, location, skills, and experience of the seeker to be updated
+    - Your request body must include the name, location, skills, and experience of the seeker to be updated
     - The id should be in the request parameters
 
   - ### **DELETE** `/seekers/:id`
     - *PROTECTED*
     - The id should be in the request parameters
     - Returns a 1 if successful, indicating the number of deleted records.
+
+    ### **_SAVED ROUTES_**
+
+  - ### **GET** `/seekers/:id/saved`
+    - *PROTECTED*
+    - The id of the seeker should be in the request parameters
+    - Returns an array of all saved jobs for a seeker
+
+  - ### **GET** `/seekers/:id/saved/:job_id`
+    - *PROTECTED*
+    - The id of the seeker and id of the job (job_id) should be in the request parameters
+    - Returns the saved job object
+
+  - ### **POST** `/seekers/:id/saved`
+    - *PROTECTED*
+    - The id of the seeker should be in the request parameters
+    - You must include `job_id`, `name`, `location`, `description`, and `company_id` in the request body. `salary` is optional
+    - Returns the saved job object
+
+  - ### **DELETE** `/seekers/:id/saved/:job_id`
+    - *PROTECTED*
+    - The id of the seeker and id of the job (job_id) should be in the request parameters
+    - Returns the number of deleted records.

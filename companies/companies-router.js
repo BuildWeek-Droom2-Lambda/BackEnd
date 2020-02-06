@@ -64,7 +64,7 @@ router.post("/:id/saved", async(req, res, next) => {
   const user = await model.findById(id);
   if (!user) {
     res.status(404).json(doesntExist);
-  } else if (!seeker || !seeker.id || !seeker.name) {
+  } else if (!seeker || !seeker.seeker_id || !seeker.seeker_name) {
     return res.status(400).json(invalidSaveRequest);
   };
 
@@ -78,8 +78,62 @@ router.post("/:id/saved", async(req, res, next) => {
 
 // get all your saved seekers
 router.get("/:id/saved", async(req, res, next) => {
-  
+  const id = req.params.id;
+
+  const user = await model.findById(id);
+  if (!user) {
+    res.status(404).json(doesntExist);
+  }
+
+  try {
+    res.status(200).json(await model.findSaved(id))
+  } catch (err) {
+    console.log(err)
+    next(err)
+  }
 });
+
+// find a saved seeker by id
+router.get("/:id/saved/:seek_id", async (req, res, next) => {
+  const id = req.params.id;
+  const seek_id = req.params.seek_id;
+
+  try {
+    const company = await model.findById(id);
+    if (!company) {
+      return res.status(404).json(doesntExist);
+    } else {
+      const savedSeeker = await model.findSavedById(id, seek_id)
+      if (savedSeeker.length < 1) {
+        return res.status(404).json({ message: "Saved seeker not found." })
+      }
+      res.status(200).json(savedSeeker)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+// delete a seeker from saved
+router.delete("/:id/saved/:seek_id", async (req, res, next) => {
+  const id = req.params.id;
+  const seek_id = req.params.seek_id;
+
+  try {
+    const company = await model.findById(id);
+    if (!company) {
+      return res.status(404).json(doesntExist);
+    } else {
+      const deleted = await model.removeSaved(id, seek_id)
+      if (deleted.numberOfDeletedRecords === 0) {
+        return res.status(404).json({ message: "Saved seeker not found." })
+      }
+      res.status(200).json(deleted)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
 
 // delete a company
 router.delete("/:id", authenticate, async (req, res, next) => {

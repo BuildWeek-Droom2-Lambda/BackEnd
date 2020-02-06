@@ -25,20 +25,6 @@ async function add(user) {
   return findById(id)
 }
 
-async function save(id, job) {
-  console.log(job)
-  await db("seekersSaved").insert({ 
-    id, 
-    job_id: job.job_id,
-    job_name: job.name,
-    job_location: job.location,
-    job_description: job.description,
-    job_salary: job.salary,
-    job_company_id: job.company_id
-  })
-  return db("seekersSaved").where({job_id: job.job_id})
-}
-
 async function update(id, updates) {
   await db("seekers")
     .where({ id })
@@ -52,12 +38,43 @@ function remove(id) {
     .del()
 }
 
+async function save(id, job) {
+  console.log(job)
+  await db("seekersSaved").insert({ 
+    id, 
+    job_id: job.job_id,
+    job_name: job.name,
+    job_location: job.location,
+    job_description: job.description,
+    job_salary: job.salary,
+    job_company_id: job.company_id
+  })
+  return db("seekersSaved").where({id, job_id: job.job_id})
+}
+
+function findSaved(id) {
+  return db("seekersSaved").where({ id })
+}
+
+function findSavedById(id, job_id) {
+  return db("seekersSaved").where({ id, job_id })
+}
+
+async function removeSaved(id, job_id) {
+  const deleted = await findSavedById(id, job_id)
+    .del()
+  return { numberOfDeletedRecords: deleted }
+}
+
 module.exports = {
   find,
   findBy,
   findById,
   update,
   add,
+  remove,
   save,
-  remove
+  findSaved,
+  findSavedById,
+  removeSaved
 }
