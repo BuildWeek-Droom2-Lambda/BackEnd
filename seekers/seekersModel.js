@@ -39,7 +39,6 @@ function remove(id) {
 }
 
 async function save(id, job) {
-  console.log(job)
   await db("seekersSaved").insert({ 
     id, 
     job_id: job.job_id,
